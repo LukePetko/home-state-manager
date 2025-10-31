@@ -8,6 +8,7 @@ defmodule HomeManager.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {Bandit, plug: HomeManager.Router, scheme: :http, port: 4000}
       # Starts a worker by calling: HomeManager.Worker.start_link(arg)
       # {HomeManager.Worker, arg}
     ]
