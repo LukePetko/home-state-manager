@@ -5,7 +5,8 @@ defmodule HomeManager.Router do
   plug :dispatch
 
   get "/" do
-    send_resp(conn, 200, "Hello from Bandit!")
+    url = Application.get_env(:home_manager, HomeManager.Repo)[:url]
+    send_resp(conn, 200, "Hello from Bandit! #{url}")
   end
 
   get "/hello/:name" do
