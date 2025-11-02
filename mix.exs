@@ -27,7 +27,8 @@ defmodule HomeManager.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, "~> 0.0"},
       {:dotenv, "~> 3.0", only: [:dev, :test]},
-      {:introspex, "~> 0.2.0", only: :dev}
+      {:introspex, "~> 0.2.0", only: :dev},
+      {:tortoise, "~> 0.10"},
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
