@@ -1,6 +1,10 @@
 defmodule HomeManager.MqttClient do
   use Tortoise.Handler
 
+  @client_id "home_manager_client"
+
+  alias HomeManager.Mqtt.Router
+
   def child_spec(opts) do
     %{
       id: __MODULE__,
@@ -16,7 +20,7 @@ defmodule HomeManager.MqttClient do
     IO.puts("Starting MQTT client with URL #{mqtt_url}")
 
     Tortoise.Supervisor.start_child(
-      client_id: "home_manager_client",
+      client_id: @client_id,
       handler: {__MODULE__, []},
       server: parse_mqtt_url(mqtt_url),
       subscriptions: [{"#", 0}, {"home/set/global/state", 0}]
@@ -40,7 +44,12 @@ defmodule HomeManager.MqttClient do
   end
 
   def handle_message(topic, payload, _opts) do
-    IO.puts("Received message on topic #{topic}: #{inspect(payload)}")
+    Router.route(topic, payload)
+    {:ok, payload}
+  end
+
+  def publish(topic, payload, opts \\ []) do
+    Tortoise.publish(@client_id, topic, payload, opts)
     {:ok, payload}
   end
 end
