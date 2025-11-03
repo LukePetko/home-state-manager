@@ -12,7 +12,7 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
     with {:ok, decoded_playload} <- decode_payload(payload),
          {:ok, room_id} <- fetch_room_id(room_name),
          {:ok, current_state} <- fetch_room_state(room_id),
-         :ok <- validate_stale_change(current_state, decoded_playload) do
+         :ok <- validate_state_change(current_state, decoded_playload) do
       update_room_state(room_id, room_name, decoded_playload)
     else
       {:error, :no_room} ->
@@ -50,9 +50,9 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
     {:ok, state}
   end
 
-  defp validate_stale_change(nil, _payload), do: :ok
-  defp validate_stale_change(%RoomState{mode: mode}, %{"mode" => mode}), do: {:error, :no_change}
-  defp validate_stale_change(_current_state, _payload), do: :ok
+  defp validate_state_change(nil, _payload), do: :ok
+  defp validate_state_change(%RoomState{mode: m}, %{"mode" => m}), do: {:error, :no_change}
+  defp validate_state_change(_current_state, _payload), do: :ok
 
   defp update_room_state(room_id, room_name, payload) do
     Repo.transaction(fn ->
