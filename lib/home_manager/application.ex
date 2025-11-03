@@ -10,7 +10,7 @@ defmodule HomeManager.Application do
     children = [
       {Bandit, plug: HomeManager.Router, scheme: :http, port: 4000},
       HomeManager.Repo,
-      HomeManager.MqttClient,
+      HomeManager.MqttClient
       # Starts a worker by calling: HomeManager.Worker.start_link(arg)
       # {HomeManager.Worker, arg}
     ]

@@ -23,7 +23,10 @@ defmodule HomeManager.MqttClient do
       client_id: @client_id,
       handler: {__MODULE__, []},
       server: parse_mqtt_url(mqtt_url),
-      subscriptions: [{"#", 0}, {"home/set/global/state", 0}]
+      subscriptions: [
+        {"home/set/global/state", 0},
+        {"home/set/room/+/state", 0}
+      ]
     )
   end
 

@@ -10,7 +10,7 @@ defmodule HomeManager.Db.Schema.RoomState do
     field :scene, :string
     field :ts, :utc_datetime
     field :version, :integer
-    belongs_to :rooms, HomeManager.Db.Schema.Rooms, foreign_key: :room_id
+    belongs_to :rooms, HomeManager.Db.Schema.Rooms, foreign_key: :room_id, type: :string
   end
 
   
