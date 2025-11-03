@@ -1,5 +1,7 @@
 defmodule HomeManager.Mqtt.Handlers.RoomState do
-  @moduledoc false
+  @moduledoc """
+  Handles room state changes
+  """
 
   import Ecto.Query
   import HomeManager.Mqtt.Handlers.Common
