@@ -3,6 +3,7 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
 
   import Ecto.Query
   import HomeManager.Mqtt.Handlers.Common
+  require Logger
   alias Ecto.Repo
   alias HomeManager.Db.Schema.{RoomState, Rooms}
   alias HomeManager.Repo
@@ -16,15 +17,15 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
       update_room_state(room_id, room_name, decoded_playload)
     else
       {:error, :no_room} ->
-        IO.puts("No room found with name #{room_name}")
+        Logger.error("No room found with name #{room_name}")
         {:error, :room_not_found}
 
       {:error, :no_change} ->
-        IO.puts("No change in room state")
+        Logger.info("No change in room state")
         :ok
 
       {:error, reason} = error ->
-        IO.puts("Error: #{inspect(reason)}")
+        Logger.error("An error occurred: #{inspect(reason)}")
         error
     end
   end
@@ -71,6 +72,8 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
         Rooms
         |> where(id: ^room_id)
         |> Repo.update_all(set: [current_mode: payload["mode"]])
+
+      Logger.info("Published new room #{room_name} state #{inserted_state.mode}")
 
       inserted_state
     end)
