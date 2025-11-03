@@ -2,6 +2,7 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
   @moduledoc false
 
   import Ecto.Query
+  import HomeManager.Mqtt.Handlers.Common
   alias Ecto.Repo
   alias HomeManager.Db.Schema.{RoomState, Rooms}
   alias HomeManager.Repo
@@ -25,13 +26,6 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
       {:error, reason} = error ->
         IO.puts("Error: #{inspect(reason)}")
         error
-    end
-  end
-
-  defp decode_payload(payload) do
-    case Jason.decode(payload) do
-      {:ok, decoded} -> {:ok, decoded}
-      {:error, reason} -> {:error, {:decode_failed, reason}}
     end
   end
 
