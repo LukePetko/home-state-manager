@@ -3,8 +3,8 @@ defmodule HomeManager.Routes.GlobalState do
 
   import HomeManager.Db.Queries.GlobalState
 
-  plug(:match)
-  plug(:dispatch)
+  plug :match
+  plug :dispatch
 
   get "/" do
     case fetch_global_state() do
