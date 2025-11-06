@@ -20,7 +20,14 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
     else
       {:error, :no_room} ->
         Logger.error("No room found with name #{room_name}")
-        {:error, :room_not_found}
+
+        case create_room(room_name) do
+          {:ok, :ok} ->
+            handle(payload, room_name)
+
+          {:error, reason} ->
+            {:error, reason}
+        end
 
       {:error, :no_change} ->
         Logger.info("No change in room state")
@@ -81,5 +88,23 @@ defmodule HomeManager.Mqtt.Handlers.RoomState do
     end)
 
     :ok
+  end
+
+  defp create_room(room_name) do
+    Repo.transaction(fn ->
+      new_room = %Rooms{
+        name: room_name,
+        created_at: DateTime.utc_now() |> DateTime.truncate(:second)
+      }
+
+      case Repo.insert(new_room) do
+        {:ok, _inserted_room} ->
+          Logger.info("Created new room #{room_name}")
+          :ok
+
+        {:error, changeset} ->
+          Repo.rollback(changeset)
+      end
+    end)
   end
 end
