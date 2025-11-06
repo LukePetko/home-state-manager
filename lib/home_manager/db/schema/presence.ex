@@ -3,6 +3,9 @@ defmodule HomeManager.Db.Schema.Presence do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
+
   schema "presence" do
     field :state, :string
     field :source, :string

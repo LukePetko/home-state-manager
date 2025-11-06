@@ -3,14 +3,15 @@ defmodule HomeManager.Db.Schema.RoomState do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :string, autogenerate: false}
-  
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
+
   schema "room_state" do
     field :mode, :string
     field :scene, :string
     field :ts, :utc_datetime
     field :version, :integer
-    belongs_to :rooms, HomeManager.Db.Schema.Rooms, foreign_key: :room_id, type: :string
+    belongs_to :rooms, HomeManager.Db.Schema.Rooms, foreign_key: :room_id
   end
 
   

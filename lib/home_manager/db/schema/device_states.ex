@@ -3,13 +3,10 @@ defmodule HomeManager.Db.Schema.DeviceStates do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "device_states" do
-    # JSONB field - requires manual type specification based on your data:
-# field :value, :map                    # For JSON objects: {"key": "value"}
-# field :value, {:array, :string}       # For string arrays: ["value1", "value2"]
-# field :value, {:array, :integer}      # For integer arrays: [1, 2, 3]
-# field :value, {:array, :map}          # For object arrays: [{"id": 1}, {"id": 2}]
+  @foreign_key_type :binary_id
 
+  schema "device_states" do
+    field :value, :map
     field :last_cmd_id, :string
     field :ts, :utc_datetime
     field :version, :integer

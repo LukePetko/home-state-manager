@@ -3,7 +3,7 @@ defmodule HomeManager.Db.Schema.GlobalState do
   use Ecto.Schema
   import Ecto.Changeset
   
-  @primary_key {:id, :string, autogenerate: false}
+  @primary_key {:id, :binary_id, autogenerate: true}
   
   schema "global_state" do
     field :mode, :string
