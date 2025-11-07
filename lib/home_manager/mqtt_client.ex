@@ -1,7 +1,7 @@
 defmodule HomeManager.MqttClient do
   use Tortoise.Handler
 
-  @client_id "home_manager_client"
+  @client_id "home_manager_#{System.get_env("HOSTNAME") || "default"}"
 
   alias HomeManager.Mqtt.Router
 
