@@ -1,5 +1,7 @@
 # HomeManager
 
+A service for handling state changes in smart home
+
 **TODO: Add description**
 
 ## Installation
