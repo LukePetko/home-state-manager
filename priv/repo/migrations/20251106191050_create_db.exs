@@ -88,5 +88,11 @@ defmodule HomeManager.Repo.Migrations.CreateDb do
     end
 
     create index(:presence, [:person_id])
+
+    create table(:security, primary_key: false) do
+      add :id, :uuid, primary_key: true, default: fragment("gen_random_uuid()")
+      add :state, :string
+      add :ts, :utc_datetime
+      add :version, :integer
   end
 end
