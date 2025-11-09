@@ -94,5 +94,6 @@ defmodule HomeManager.Repo.Migrations.CreateDb do
       add :state, :string
       add :ts, :utc_datetime
       add :version, :integer
+    end
   end
 end
