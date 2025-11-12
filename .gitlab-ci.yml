@@ -6,6 +6,7 @@ variables:
   IMAGE_NAME: home-manager
   CONTAINER_NAME: home-manager
   PORT: 9300
+  INTERAL_PORT: 4000
 
 build:
   stage: build
@@ -19,7 +20,7 @@ deploy:
   script:
     - docker stop $CONTAINER_NAME || true
     - docker rm $CONTAINER_NAME || true
-    - docker run -d --name $CONTAINER_NAME -p $PORT:$PORT -e DATABASE_URL=$DATABASE_URL -e MQTT_URL=$MQTT_URL $IMAGE_NAME
+    - docker run -d --name $CONTAINER_NAME -p $PORT:$INTERNAL_PORT -e DATABASE_URL=$DATABASE_URL -e MQTT_URL=$MQTT_URL $IMAGE_NAME
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
 
